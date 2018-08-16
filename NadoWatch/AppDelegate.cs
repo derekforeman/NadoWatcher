@@ -25,7 +25,6 @@ namespace NadoWatch
             // If not required for your application you can safely delete this method
             AppCenter.Start("3786619f-11b5-48bc-8364-6b33d2975201",
                    typeof(Analytics), typeof(Crashes));
-            AppCenter.Start("3786619f-11b5-48bc-8364-6b33d2975201", typeof(Analytics), typeof(Crashes));
             return true;
         }
 
