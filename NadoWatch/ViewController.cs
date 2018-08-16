@@ -20,10 +20,12 @@ namespace NadoWatch
             // Note: this .ctor should not contain any initialization logic.
         }
 
-        public override void ViewDidLoad()
+        public async override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            GetData();
+            txtDescription.AdjustsFontForContentSizeCategory = true;
+
+            await GetData();
         }
 
         public override void DidReceiveMemoryWarning()
