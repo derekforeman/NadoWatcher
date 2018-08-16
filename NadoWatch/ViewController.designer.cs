@@ -15,10 +15,19 @@ namespace NadoWatch
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton BtnRefresh { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextView txtDescription { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
+            if (BtnRefresh != null) {
+                BtnRefresh.Dispose ();
+                BtnRefresh = null;
+            }
+
             if (txtDescription != null) {
                 txtDescription.Dispose ();
                 txtDescription = null;

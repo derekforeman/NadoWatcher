@@ -23,20 +23,24 @@ namespace NadoWatch
         public async override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            txtDescription.AdjustsFontForContentSizeCategory = true;
+            //txtDescription.AdjustsFontForContentSizeCategory = true;
 
             await GetData();
+
+            BtnRefresh.TouchUpInside += async delegate {
+                await GetData();
+            };
         }
 
         public override void DidReceiveMemoryWarning()
         {
             base.DidReceiveMemoryWarning();
-            // Release any cached data, images, etc that aren't in use.
         }
 
         private async Task<bool> GetData()
         {
-            if(DoIHaveInternet()) { 
+            if(DoIHaveInternet()) 
+            { 
                 var url = Settings.GeneralSettings;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
 
@@ -55,5 +59,6 @@ namespace NadoWatch
             }
             return false;
         }
+
     }
 }
