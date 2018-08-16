@@ -4,12 +4,16 @@ using System.Net;
 using System.Threading.Tasks;
 using UIKit;
 using NadoWatch.Helpers;
+using Plugin.Connectivity;
 
 namespace NadoWatch
 {
     public partial class ViewController : UIViewController
     {
-        //string url = "https://gist.githubusercontent.com/derekforeman/7f0a1914f623530499340d4c2aa20a93/raw/488c8eba5caedaa45f5a2d0bb091e8d792cfe81f/description.txt";
+        public bool DoIHaveInternet()
+        {
+            return CrossConnectivity.Current.IsConnected;
+        }
 
         protected ViewController(IntPtr handle) : base(handle)
         {
@@ -30,22 +34,24 @@ namespace NadoWatch
 
         private async Task<bool> GetData()
         {
-            var url = Settings.GeneralSettings;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
+            if(DoIHaveInternet()) { 
+                var url = Settings.GeneralSettings;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
 
-            request.Method = "GET";
+                request.Method = "GET";
 
-            using (WebResponse response = await request.GetResponseAsync())
-            {
-                using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                using (WebResponse response = await request.GetResponseAsync())
                 {
-
-                    var s = stream.ReadToEnd();
-                    txtDescription.Text = s;
-                    return true;
-                    //process the response
+                    using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+                    {
+                        var s = stream.ReadToEnd();
+                        txtDescription.Text = s;
+                        return true;
+                        //process the response
+                    }
                 }
             }
+            return false;
         }
     }
 }
